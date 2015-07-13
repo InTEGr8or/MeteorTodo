@@ -15,13 +15,15 @@ if (Meteor.isClient) {
     incompleteCount: function() {
       return Tasks.find({checked: {$ne: true }}).count();
     }
-  })
+  });
   Template.body.events({
     "submit .new-task": function(event){
       var text = event.target.text.value;
       Tasks.insert({
         text: text,
-        createdAt: new Date()
+        createdAt: new Date(),
+        owner: Meteor.userId(),
+        username: Meteor.user().username
       });
       event.target.text.value = "";
       return false;
@@ -29,7 +31,7 @@ if (Meteor.isClient) {
     "change .hide-completed input": function (event) {
       Session.set("hideCompleted", event.target.checked);
     }
-  })
+  });
   Template.task.events({
     "click .toggle-checked": function() {
       Tasks.update(this._id, {$set: {checked: ! this.checked}});
@@ -37,7 +39,10 @@ if (Meteor.isClient) {
     "click .delete": function(){
       Tasks.remove(this._id);
     }
-  })
+  });
+  Accounts.ui.config({
+    passwordSignupFields: "USERNAME_ONLY"
+  });
 }
 
 if (Meteor.isServer) {
