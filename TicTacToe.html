@@ -38,13 +38,12 @@
 <template name="boardTable">
   <table>
     <tbody>
+      {{ #each board}}
       <tr>
-        <td>
-          {{ board[0][0] }}
-        </td>
-        <td>
-          {{ board[0][1] }}
-        </td>
+        {{#each cells}}
+          {{> cell}}
+        {{/each}}
       </tr>
+      {{/each}}
     </tbody>
   </table>
