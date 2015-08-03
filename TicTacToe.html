@@ -1,0 +1,50 @@
+<head>
+  <h1>Tic-tac-toe</h1>
+</head>
+<body>
+  <header>
+    <h1>Todo List ({{incompleteCount}})</h1>
+    <label class="hide-completed">
+    <input type="checkbox" checked="{{hideCompleted}}" />
+    Hide Completed Tasks
+    </label>
+    {{> loginButtons }}
+    {{#if currentUser }}
+    <form class="new-task">
+      <input type="text" name="text" placeholder="Type to add new tasks" />
+    </form>
+    {{/if}}
+  </header>
+  <table>
+    <tbody>
+  {{#each rows}}
+    {{> row}}
+    {{/each}}
+  </tbody>
+  </table>
+</body>
+<template name="row">
+  <tr class="{{#if checked}}checked{{/if}}">
+  	{{#each row}}
+      {{> cell}}
+    {{/each}}
+  </tr>
+</template>
+<template name="cell">
+  <td class="{{#if isWinCell}}win-cell{{/if}}">
+    {{ cell.value}}
+  </td>
+</template>
+<template name="boardTable">
+  <table>
+    <tbody>
+      <tr>
+        <td>
+          {{ board[0][0] }}
+        </td>
+        <td>
+          {{ board[0][1] }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
